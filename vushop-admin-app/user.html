@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Team Manager</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/modal.scss" rel="stylesheet" />
+    <link
+      href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+      <a class="navbar-brand" href="index.html">Team Manager</a>
+      <button
+        class="btn btn-link btn-sm order-1 order-lg-0"
+        id="sidebarToggle"
+        href="#"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+      <!-- Navbar Search-->
+      <form
+        class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0"
+      >
+        <div class="input-group">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Search for..."
+            aria-label="Search"
+            aria-describedby="basic-addon2"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+      <!-- Navbar-->
+      <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="userDropdown"
+            href="#"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            ><i class="fas fa-user fa-fw"></i
+          ></a>
+          <div
+            class="dropdown-menu dropdown-menu-right"
+            aria-labelledby="userDropdown"
+          >
+            <a class="dropdown-item" href="#">Thiết lập</a>
+            <a class="dropdown-item" href="#">Hoạt động</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="login.html">Đăng xuất</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <div id="layoutSidenav">
+      <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <a class="nav-link" href="user-list.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-user-alt"></i>
+                </div>
+                Quản lý đội nhóm
+              </a>
+              <a class="nav-link" href="role-list.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-user-shield"></i>
+                </div>
+                Quản lý các quyền
+              </a>
+            </div>
+          </div>
+          <div class="sb-sidenav-footer">
+            <div class="small">Logged in as:</div>
+            Start Bootstrap
+          </div>
+        </nav>
+      </div>
+
+      <div
+        class="modal fade"
+        id="addForm"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Thêm mới thành viên
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form onsubmit="onAdd()">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="addUsername">Tài khoản</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="addUsername"
+                    aria-describedby="emailHelp"
+                    placeholder="Mời nhập tài khoản"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="addEmail">Địa chỉ Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="addEmail"
+                    aria-describedby="emailHelp"
+                    placeholder="Mời nhập Email"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="addPassword">Mật khẩu</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="addPassword"
+                    placeholder="Mời nhập mật khẩu"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="addFullName">Họ và tên </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="addFullName"
+                    placeholder="Mời nhập họ tên"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="addAddress">Địa chỉ </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="addAddress"
+                    placeholder="Mời nhập địa chỉ"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="addPhone">Điện thoại </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="addPhone"
+                    placeholder="Mời nhập điện thoại"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="addAvatar">Ảnh đại diện </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="addAvatar"
+                    placeholder="Mời nhập link ảnh đại diện"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="addRoleId">Quyền </label>
+                  <select class="form-select" id="addRoleId">
+                    <option value="2" selected>Người dùng</option>
+                    <option value="1">Quản trị viên</option>
+                  </select>
+                  <label for="addActivated">Kích hoạt </label>
+                  <select class="form-select" id="addActivated">
+                    <option value="true" selected>Đang hoạt động</option>
+                    <option value="false">Chưa hoạt động</option>
+                  </select>
+                </div>
+              </div>
+              <div
+                class="modal-footer border-top-0 d-flex justify-content-center"
+              >
+                <button type="submit" class="btn btn-success">Thêm mới</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="editForm"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Sửa thông tin thành viên
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form onsubmit="onEdit()">
+              <div class="modal-body">
+                <input type="hidden" id="editId" />
+                <div class="form-group">
+                  <label for="editUsername">Tài khoản</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editUsername"
+                    aria-describedby="emailHelp"
+                    placeholder="Mời nhập tài khoản"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editEmail">Địa chỉ Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="editEmail"
+                    aria-describedby="emailHelp"
+                    placeholder="Mời nhập Email"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editPassword">Mật khẩu</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="editPassword"
+                    placeholder="Mời nhập mật khẩu"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editFullName">Họ và tên </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editFullName"
+                    placeholder="Mời nhập họ tên"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editAddress">Địa chỉ </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editAddress"
+                    placeholder="Mời nhập địa chỉ"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editPhone">Điện thoại </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editPhone"
+                    placeholder="Mời nhập điện thoại"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editAvatar">Ảnh đại diện </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editAvatar"
+                    placeholder="Mời nhập link ảnh đại diện"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editRoleId">Quyền </label>
+                  <select class="form-select" id="editRoleId">
+                    <option value="2" selected>Người dùng</option>
+                    <option value="1">Quản trị viên</option>
+                  </select>
+                  <label for="editActivated">Kích hoạt </label>
+                  <select class="form-select" id="editActivated">
+                    <option value="true" selected>Đang hoạt động</option>
+                    <option value="false">Chưa hoạt động</option>
+                  </select>
+                </div>
+              </div>
+              <div
+                class="modal-footer border-top-0 d-flex justify-content-center"
+              >
+                <button type="submit" class="btn btn-success">Sửa lại</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="layoutSidenav_content">
+        <main>
+          <div class="container-fluid">
+            <h1 class="mt-2">Danh sách thành viên</h1>
+            <div class="card mb-4">
+              <div class="card-header">
+                <i class="fas fa-table mr-1"></i> Danh sách thành viên
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table
+                    class="table table-bordered"
+                    id="dataTable"
+                    width="100%"
+                    cellspacing="0"
+                  >
+                    <thead>
+                      <tr>
+                        <th scope="col">Mã</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mật khẩu</th>
+                        <th scope="col">Họ tên</th>
+                        <th scope="col">Địa chỉ</th>
+                        <th scope="col">Điện thoại</th>
+                        <th scope="col">Ảnh đại diện</th>
+                        <!-- <th scope="col">Quyền</th> -->
+                        <th scope="col">
+                          <a
+                            type="button"
+                            data-toggle="modal"
+                            data-target="#addForm"
+                            class="btn btn-sm mb-1 btn-primary"
+                          >
+                            Thêm
+                          </a>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="users">
+                      <tr></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid">
+            <div
+              class="d-flex align-items-center justify-content-between small"
+            >
+              <div class="text-muted">Copyright &copy; Your Website 2020</div>
+              <div>
+                <a href="#">Privacy Policy</a> &middot;
+                <a href="#">Terms &amp; Conditions</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./js/scripts.js"></script>
+    <script
+      src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./assets/demo/datatables-demo.js"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/user.js"></script>
+  </body>
+</html>
