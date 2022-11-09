@@ -1,6 +1,7 @@
 package com.vu.entity;
 
 import com.vu.constant.EntityConstant;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -65,10 +66,6 @@ public class User {
     
     @Column(name = EntityConstant.REMEMBER_TOKEN_COLUMN, length = 255, nullable = true)
     private String rememberToken;
-    
-    @OneToOne(targetEntity = PasswordResetToken.class, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, name = "prt_id")
-    private User user;
 
     public User() {
     }
