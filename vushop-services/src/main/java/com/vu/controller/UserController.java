@@ -133,4 +133,23 @@ public class UserController {
 		userService.removeUser(id);
 		return new ResponseEntity<String>("Delete successfully!", HttpStatus.OK);
 	}
+	
+	@PutMapping("/reset_password/{id}")
+	public ResponseEntity<?> resetPassword(@PathVariable("id") Long id, 
+								  @RequestBody String password,
+								  @RequestHeader(SecurityConstant.AUTH_TOKEN_HEADER) final String authToken) {
+		if (!securityService.isAuthenticated() && !securityService.isValidToken(authToken)) {
+			return new ResponseEntity<String>(MessageConstant.UNAUTHORIZED_ERROR, HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			if (userService.getUserById(id) == null) {
+				return new ResponseEntity<String>("Not found any user!", HttpStatus.BAD_REQUEST);
+			}
+			userService.resetPassword(id, password);
+			return new ResponseEntity<String>("reset password successfully!", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+	}
 }

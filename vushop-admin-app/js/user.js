@@ -20,7 +20,6 @@ let getAll = function () {
                     <tr>
                         <td>${user.id}</td>
                         <td>${user.email}</td>
-                        <td>${user.password}</td>
                         <td>${user.fullname}</td>
                         <td>${user.address}</td>
                         <td>${user.phone}</td>
@@ -46,9 +45,11 @@ let getAll = function () {
 };
 
 let onDelete = function (id) {
+  let token = localStorage.getItem("currentToken");
   axios({
     url: `http://localhost:8080/api/user/remove/${id}`,
     method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
   })
     .then(function (resp) {
       console.log(resp);
@@ -60,6 +61,7 @@ let onDelete = function (id) {
 };
 
 let onAdd = function () {
+  let token = localStorage.getItem("currentToken");
   var body = {
     username: document.getElementById("addUsername").value,
     email: document.getElementById("addEmail").value,
@@ -75,6 +77,7 @@ let onAdd = function () {
   axios({
     url: `http://localhost:8080/api/user/add`,
     method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
     data: body,
   })
     .then(function (resp) {
@@ -91,6 +94,7 @@ let setEditId = function (id) {
 };
 
 let onEdit = function () {
+  let token = localStorage.getItem("currentToken");
   var id = document.getElementById("editId").value;
   console.log(id);
   var body = {
@@ -109,6 +113,7 @@ let onEdit = function () {
   axios({
     url: `http://localhost:8080/api/user/edit/${id}`,
     method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
     data: body,
   })
     .then(function (resp) {

@@ -105,4 +105,16 @@ public class UserServiceImpl implements UserService {
 		return modelMapper.map(user, UserDto.class);
 	}
 
+	@Override
+	public void resetPassword(Long id, String password) {
+		if (Optional.ofNullable(userRepository.findById(id)).isPresent()) {
+			User user = userRepository.findById(id).get();
+			String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
+			user.setPassword(hashedPassword);
+			
+			user.setId(id);
+			userRepository.save(user);
+		}
+	}
+
 }

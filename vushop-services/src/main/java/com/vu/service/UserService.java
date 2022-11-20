@@ -19,4 +19,7 @@ public interface UserService {
 	UserDto getUserByEmail(String email);
 	
 	UserDto getUserById(Long userId);
+	
+	void resetPassword(Long id, String password);
+	
 }
